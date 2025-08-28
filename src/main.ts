@@ -22,4 +22,8 @@ async function bootstrap() {
 
   await app.listen(3000);
 }
-bootstrap();
+bootstrap()
+  .then(() => {
+    console.log('Application started on port', process.env.PORT ?? 3000);
+  })
+  .catch(() => ({}));

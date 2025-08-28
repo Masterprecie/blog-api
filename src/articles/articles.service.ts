@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
@@ -22,6 +26,9 @@ export class ArticlesService {
   }
 
   async findOne(id: string) {
+    if (!id || id.trim().length === 0) {
+      throw new BadRequestException('Article ID is required');
+    }
     const article = await this.prisma.article.findUnique({
       where: { id },
     });
@@ -34,13 +41,17 @@ export class ArticlesService {
   }
 
   async update(id: string, updateArticleDto: UpdateArticleDto) {
+    if (!id || id.trim().length === 0) {
+      throw new BadRequestException('Article ID is required');
+    }
+
     try {
       return await this.prisma.article.update({
         where: { id },
         data: updateArticleDto,
       });
     } catch (error) {
-      if (error.code === 'P2025') {
+      if (error) {
         throw new NotFoundException(`Article with ID ${id} not found`);
       }
       throw error;
@@ -48,12 +59,16 @@ export class ArticlesService {
   }
 
   async remove(id: string) {
+    if (!id || id.trim().length === 0) {
+      throw new BadRequestException('Article ID is required');
+    }
     try {
       return await this.prisma.article.delete({
         where: { id },
       });
     } catch (error) {
-      if (error.code === 'P2025') {
+      console.log(error);
+      if (error) {
         throw new NotFoundException(`Article with ID ${id} not found`);
       }
       throw error;

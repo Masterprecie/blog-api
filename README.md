@@ -12,7 +12,7 @@ A RESTful blog API built with NestJS, Prisma ORM, and SQLite database.
 
 ## Prerequisites
 
-- Node.js (v14 or higher)
+- Node.js (v20 or higher)
 - npm or yarn
 
 ## Installation
@@ -20,6 +20,6 @@ A RESTful blog API built with NestJS, Prisma ORM, and SQLite database.
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone <https://github.com/Masterprecie/blog-api>
 cd blog-api
 ```
